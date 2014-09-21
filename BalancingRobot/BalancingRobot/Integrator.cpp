@@ -15,22 +15,17 @@ Integrator::Integrator(int capacity)
 void Integrator::pushValue(float newValue)
 {
 	values[index++] = newValue;
-
-	if (index >= capacity)
-	{
-		index = 0;
-	}
+	index %= capacity;
 }
 
 float Integrator::getSum()
 {
 	float result = 0;
-
 	for (int i = 0; i < capacity; i++)
 	{
 		result += values[i];
 	}
-	return result;
+	return result/capacity;
 }
 
 Integrator::~Integrator()

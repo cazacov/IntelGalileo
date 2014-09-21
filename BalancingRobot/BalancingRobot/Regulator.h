@@ -1,8 +1,5 @@
 #pragma once
-#include "Gyroscope.h"
 #include "Integrator.h"
-
-#define INTEGRAL_MEMORY_LENGTH 50
 
 class Regulator
 {
@@ -13,18 +10,11 @@ private:
 	float KP;
 	float KI;
 	float KD;
-	float KSI;
-	float memory[INTEGRAL_MEMORY_LENGTH];
-
-	void pushToMemory(float newValue);
-	float getIntegral();
-	int memoryIndex;
-	Integrator* speedIntegrator;
+	Integrator* integrator;
 public:
-	Regulator();
+	Regulator(int integratorLength);
 	~Regulator();
-	void init(void);
-	void calibrate(Gyroscope* gyroscope);
-	float getNextSpeed(float phi, float deltaPhi, int timeMs);
+	void init(float pKP, float pKI, float pKD);
+	float getResult(float currentValue, float deltaValue, long timeMicros);
 };
 

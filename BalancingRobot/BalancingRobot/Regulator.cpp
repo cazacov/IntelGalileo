@@ -2,82 +2,30 @@
 #include "stdafx.h"
 #include "arduino.h"
 
-Regulator::Regulator()
+Regulator::Regulator(int integratorLength)
 {
-	KP = 30;
-	KD = 0;
-	KI = 0;
-	KSI = 0.01;
-	speedIntegrator = new Integrator(20);
+	integrator = new Integrator(integratorLength);
 }
 
 Regulator::~Regulator()
 {
-	if (speedIntegrator != NULL)
+	if (integrator != NULL)
 	{
-		delete speedIntegrator;
-		speedIntegrator = NULL;
+		delete integrator;
+		integrator = NULL;
 	}
 }
 
-void Regulator::calibrate(Gyroscope* gyroscope)
+void Regulator::init(float pKP, float pKI, float pKD)
 {
-	int calibrationEnd = millis() + 2 * 1000; // 2 seconds
-
-	int iterationCount = 0;
-	double meanPhi = 0;
-	double meanDeltaPhi = 0;
-
-	while (millis() < calibrationEnd)
-	{
-		float phi, deltaPhi;
-		gyroscope->getAngleY(phi, deltaPhi);
-		meanPhi += phi;
-		meanDeltaPhi += deltaPhi;
-		iterationCount++;
-	}
-
-	phi0 = meanPhi / iterationCount;
-	deltaPhi0 = meanDeltaPhi / iterationCount;
-
-	Log(L"Calibration done. Phi0=%f\t Delta0=%f\n", phi0, deltaPhi0);
+	KP = pKP;
+	KI = pKI;
+	KD = pKD;
 }
 
-void Regulator::init(void)
+float Regulator::getResult(float currentValue, float deltaValue, long timeMicros)
 {
-	integral = 0;
-	for (int i = 0; i < INTEGRAL_MEMORY_LENGTH; i++)
-	{
-		memory[i] = 0;
-	}
-	int memoryIndex = 0;
-}
-
-void Regulator::pushToMemory(float newValue)
-{
-	memory[memoryIndex++] = newValue;
-	if (memoryIndex >= INTEGRAL_MEMORY_LENGTH)
-	{
-		memoryIndex = 0;
-	}
-}
-
-float Regulator::getIntegral()
-{
-	float sum = 0;
-	for (int i = 0; i < INTEGRAL_MEMORY_LENGTH; i++)
-	{
-		sum += memory[i];
-	}
-	return sum / INTEGRAL_MEMORY_LENGTH;
-}
-
-float Regulator::getNextSpeed(float phi, float deltaPhi, int timeMs)
-{
-	pushToMemory(phi);
-	float integral = getIntegral();
-
-	float result = phi * KP + deltaPhi * KD + integral * KI + speedIntegrator->getSum() * KSI;
-	speedIntegrator->pushValue(result);
+	integrator->pushValue(currentValue);
+	float result = currentValue * KP + deltaValue * KD + integrator->getSum() * KI;
 	return result;
 }

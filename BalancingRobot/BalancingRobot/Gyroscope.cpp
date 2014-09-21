@@ -148,7 +148,7 @@ void Gyroscope::getAngleFiltered(float &phi, float &deltaPhi, unsigned long meas
 
 	if (lastMeasureTime > 0)
 	{
-		result += d * (measureTime - lastMeasureTime) / 1000.0 * 0.95;
+		result += d * (measureTime - lastMeasureTime) / 1000000.0 * 0.95;
 	}
 
 	if (fabs(p) < 30)

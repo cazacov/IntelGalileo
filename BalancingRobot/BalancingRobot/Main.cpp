@@ -8,7 +8,8 @@
 #include "Regulator.h"
 #include "KeyboardController.h"
 
-#define TICK_LENGTH 10
+#define TICK_PER_SECOND 75
+#define TICK_LENGTH_MICROSECONDS 1000000L / TICK_PER_SECOND
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -17,25 +18,22 @@ int _tmain(int argc, _TCHAR* argv[])
 
 Gyroscope gyroscope;
 Motors motors;
-Regulator regulator;
+Regulator angleRegulator(TICK_PER_SECOND);
+Regulator speedRegulator(TICK_PER_SECOND / 2);
 KeyboardController keyboard;
+Integrator speedIntegrator(TICK_PER_SECOND);
+
+float targetSpeed = 0;
+float targetAngle = 0;
 
 void setup()
 {
 	motors.init();
 	gyroscope.init();
 	keyboard.init();
+	angleRegulator.init(0, 0, 0);
+	speedRegulator.init(20, 0, 0);
 	wprintf(L"Press Esc to exit\n");
-
-	/*int n = 0;
-	unsigned long end = millis() + 1000;
-	while (millis() < end)
-	{
-		float p, d;
-		gyroscope.getAngleY(p, d);
-		n++;
-	}
-	wprintf(L"Measures per second: %d\n", n);*/
 }
 
 // the loop routine runs over and over again forever:
@@ -45,39 +43,41 @@ void loop()
 	delay(3000);
 	wprintf(L"Calibrating...");
 	gyroscope.calibrate();
-	wprintf(L"Done\n");
+
+	wprintf(L"Cycle tyme in microseconds: %ld \n", TICK_LENGTH_MICROSECONDS);
 
 	// main cycle
-	regulator.init();
 	delay(100);
 
-	unsigned long lastIteration = millis();
-	unsigned long nextIteration = lastIteration + TICK_LENGTH;
+	unsigned long lastIteration = micros();
+	unsigned long nextIteration = lastIteration + TICK_LENGTH_MICROSECONDS;
 
 	int n = 0;
 
 	do {
 		float phi, delta;
-		while (millis() < nextIteration)
+		while (micros() < nextIteration)
 		{
 			// do nothing 
 		}
-		unsigned  long now = millis();
+		unsigned long now = micros();
 		gyroscope.getAngleFiltered(phi, delta, now);
 		
+		targetAngle = angleRegulator.getResult(speedIntegrator.getSum(), 0, now - lastIteration);
+
 		float motorSpeed = 0;
-		motorSpeed = regulator.getNextSpeed(phi, delta, now - lastIteration);
+		motorSpeed = speedRegulator.getResult(phi, delta, now - lastIteration);
 
 		n++;
-
-		if (n % 10 == 0)
+		//if (n % 10 == 0)
 		{
-			wprintf(L"%d %f\t%f\t%f\n", n, phi, delta, motorSpeed);
+			wprintf(L"%d\t%f\t%f\t%f\t%f\n", n, targetAngle, phi, delta, motorSpeed);
 		}
 
 		motors.setSpeedBoth(motorSpeed);
+		speedIntegrator.pushValue(motorSpeed);
 		lastIteration = now;
-		nextIteration = now + TICK_LENGTH;
+		nextIteration = now + TICK_LENGTH_MICROSECONDS;
 
 		keyboard.processEvents();
 		if (keyboard.shouldExit())
