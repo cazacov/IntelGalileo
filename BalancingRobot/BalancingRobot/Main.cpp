@@ -31,8 +31,8 @@ void setup()
 	motors.init();
 	gyroscope.init();
 	keyboard.init();
-	angleRegulator.init(0, 0, 0);
-	speedRegulator.init(20, 0, 0);
+	angleRegulator.init(-0.1, 0, 0);
+	speedRegulator.init(30, 0, 0);
 	wprintf(L"Press Esc to exit\n");
 }
 
@@ -66,10 +66,10 @@ void loop()
 		targetAngle = angleRegulator.getResult(speedIntegrator.getSum(), 0, now - lastIteration);
 
 		float motorSpeed = 0;
-		motorSpeed = speedRegulator.getResult(phi, delta, now - lastIteration);
+		motorSpeed = speedRegulator.getResult(phi - targetAngle, delta, now - lastIteration);
 
 		n++;
-		//if (n % 10 == 0)
+		if (n % 10 == 0)
 		{
 			wprintf(L"%d\t%f\t%f\t%f\t%f\n", n, targetAngle, phi, delta, motorSpeed);
 		}
