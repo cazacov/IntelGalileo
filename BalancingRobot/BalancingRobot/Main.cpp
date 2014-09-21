@@ -31,8 +31,8 @@ void setup()
 	motors.init();
 	gyroscope.init();
 	keyboard.init();
-	angleRegulator.init(-0.1, 0, 0);
-	speedRegulator.init(30, 0, 0);
+	angleRegulator.init(-0.02, 0, 0);
+	speedRegulator.init(35, 0.2, 0);
 	wprintf(L"Press Esc to exit\n");
 }
 
