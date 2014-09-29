@@ -54,7 +54,7 @@ The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connecte
 ### Using I2C on Galileo ###
 Code example:
 
-''' cpp
+``` cpp
 #include <Wire.h>
 #define GYRO 0x68         // gyro I2C address
 #define REG_GYRO_X 0x1D   // IMU-3000 Register address for GYRO_XOUT_H
@@ -104,4 +104,4 @@ void writeTo(int device, byte address, byte val) {
 	Wire.endTransmission();         // end transmission
 }
 
-'''
+```
