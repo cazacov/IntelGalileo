@@ -42,12 +42,66 @@ Intel Galileo board running Windows is the "brain" of the robot. [Here](http://w
 
 The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connected to analog pins A4 and A5 of the board:
 
-| Galileo Pin | IMU breakout contact |
-|-------------|:--------------------:|
-| A4          | SDA                  |
-| A5          | SCL                  |
-| GND         | GND                  |
-| 3.3V        | VCC                  |
+| Galileo Pin | IMU board |
+|-------------|:---------:|
+| A4          | SDA       |
+| A5          | SCL       |
+| GND         | GND       |
+| 3.3V        | VCC       |
 
 [<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>]
 
+### Using I2C on Galileo ###
+Code example:
+
+''' cpp
+#include <Wire.h>
+#define GYRO 0x68         // gyro I2C address
+#define REG_GYRO_X 0x1D   // IMU-3000 Register address for GYRO_XOUT_H
+#define ACCEL 0x53        // Accel I2c Address
+#define ADXL345_POWER_CTL 0x2D
+
+void setup()
+{
+	Wire.begin();
+	// Set Gyro settings
+	// Sample Rate 1kHz, Filter Bandwidth 42Hz, Gyro Range 500 d/s 
+	writeTo(GYRO, 0x16, 0x0B);
+	//set accel register data address
+	writeTo(GYRO, 0x18, 0x32);
+	// set accel i2c slave address
+	writeTo(GYRO, 0x14, ACCEL);
+	// Set passthrough mode to Accel so we can turn it on
+	writeTo(GYRO, 0x3D, 0x08);
+	// set accel power control to 'measure'
+	writeTo(ACCEL, ADXL345_POWER_CTL, 8);
+	//cancel pass through to accel, gyro will now read accel for us   
+	writeTo(GYRO, 0x3D, 0x28);
+}
+
+byte buffer[12];   // Array to store ADC values 
+void loop()
+{
+// First set the register start address for X on Gyro  
+   Wire.beginTransmission(GYRO);
+   Wire.write(REG_GYRO_X); //Register Address GYRO_XOUT_H
+   Wire.endTransmission();
+
+// Now read the 12 data bytes
+   Wire.requestFrom(GYRO, 12); // Read 12 bytes
+   i = 0;
+   while (Wire.available())
+   {
+      buffer[i] = Wire.read();
+      i++;
+   } 
+}
+
+void writeTo(int device, byte address, byte val) {
+	Wire.beginTransmission(device); // start transmission to device 
+	Wire.write(address);            // send register address
+	Wire.write(val);                // send value to write
+	Wire.endTransmission();         // end transmission
+}
+
+'''
