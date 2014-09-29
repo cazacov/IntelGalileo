@@ -40,5 +40,14 @@ Intel Galileo board running Windows is the "brain" of the robot. [Here](http://w
 | 6   | Motor 2 - Speed (PWM) |
 | 7   | Motor 2 - Direction   |
 
+The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connected to analog pins A4 and A5 of the board:
 
+| Galileo Pin | IMU breakout contact |
+|-------------|:--------------------:|
+| A4          | SDA                  |
+| A5          | SCL                  |
+| GND         | GND                  |
+| 3.3V        | VCC                  |
+
+[<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="480" height="640"/>]
 
