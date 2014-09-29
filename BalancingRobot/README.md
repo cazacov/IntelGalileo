@@ -26,7 +26,7 @@ Motors are controlled by the Arduino motor shield that gets power directly from 
 ##Accelerometer and gyroscopes##
 It could be counterintuitive, but the robot is easier to balance if the heavy battery is placed on the very top of it. The robot then acts like an [inverted pendulum](http://en.wikipedia.org/wiki/Inverted_pendulum) that's relatively easy to control. 
 
-Most of models I saw before place the accelerometer to the bottom of the robot, near the rotation axis. In my case the interference from the horizontal movements caused by the motors was too high and the values read from the accelerator were of very poor quality. I decided to put the accelerometer to the robot's center of gravity, that's at about 60% of the total height.  
+Most of the models I saw before place the accelerometer to the bottom of the robot, near the rotation axis. In my case the interference from the horizontal movements caused by the motors was too high and the values read from the accelerator were of very poor quality. I decided to put the accelerometer to the robot's center of gravity, that's at about 60% of the total height.  
 
 <img src="_img/accelerometer.jpg?raw=true" alt="Power circuits" width="480" height="640"/>
 
@@ -161,7 +161,7 @@ The killer feature of the Galileo borad is the PCI-Express slot on the rear side
 
 <img src="_img/wireless.jpg?raw=true" alt="Wireless module on Intel's N135 chip" width="640" height="480"/>
 
-Unfortunately I did not find the way to use this PCI-E WLAN card under Windows (it works perfect under Yocto Linux from Intel's image), so I had to debug the code over the LAN cable. To minimize possible mechanical disturbances  I used the flat flexible LAN cable that is only 1x6 mm thick.  
+Unfortunately I did not find the way to use this PCI-E WLAN card under Windows (it works perfect under Yocto Linux from Intel's image), so I had to debug the code over a LAN cable. To minimize possible mechanical disturbances  I used the flat flexible LAN cable that is only 1x6 mm thick.  
 
 <img src="_img/cable.jpg?raw=true" alt="Flexible LAN cable" width="640" height="480"/>
 
