@@ -105,6 +105,8 @@ void writeTo(int device, byte address, byte val) {
 }
 
 ```
+The resulting performance is about 120 reads per second, 12 bytes each.
+
 
 ### Keyboard input in the modern C###
 
