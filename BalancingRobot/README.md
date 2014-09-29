@@ -153,6 +153,7 @@ if (eventCount > 0)
 	}
 }
 ```
+When you deploy the Galileo project in Viusal Studio it's automatically transfered to the "C:\test" folder on the microcomuter. Log in with the telnet, start your EXE file and use keyboard on the desktop to control the robot.  
 
 ###Connectivity###
 
