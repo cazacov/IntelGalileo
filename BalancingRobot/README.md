@@ -49,5 +49,5 @@ The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connecte
 | GND         | GND                  |
 | 3.3V        | VCC                  |
 
-[<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="480" height="640"/>]
+[<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>]
 
