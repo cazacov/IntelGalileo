@@ -30,3 +30,15 @@ Most of models I saw before place the acceleometer to the bottom of the robot, n
 
 [<img src="_img/accelerometer.jpg?raw=true" alt="Power circuits" width="480" height="640"/>]
 
+##Microcomputer##
+Intel Galileo board running Windows is the "brain" of the robot. [Here](http://windowsondevices.com) you can sign up for the Windows Developer Program for IoT. The motor shield uses four digital pins on the board:
+
+| Pin |         Action        |
+|-----|:---------------------:|
+| 4   | Motor 1 - Direction   |
+| 5   | Motor 1 - Speed (PWM) |
+| 6   | Motor 2 - Speed (PWM) |
+| 7   | Motor 2 - Direction   |
+
+
+
