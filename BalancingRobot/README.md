@@ -18,7 +18,7 @@ Any 9V DC motors should be Ok. I used ones from Lego because they are perfectly 
 <img src="_img/motors.jpg?raw=true" alt="Motors" width="640" height="480"/>
 
 ##Power circuit##
-The battery provides about 8.4 volts, the exact voltage varies depending on load. The Galileo board needs a stabilized 5V current supply over 5.6 mm jack. I took DC-DC step down converter based on LM2596 chip.
+The battery provides about 8.4 volts; the exact voltage varies depending on the load. The Galileo board needs a stabilized 5V supply over 5.6 mm jack. I took DC-DC step down converter based on LM2596 chip to convert unstable 8 volts in stable 5. As a nice bonus it has LED indicator showing the output voltage. The indicator is optional, cheaper converters have no indicator but also do their work well. You can find them by searching "LM2596" on eBay.
 
 Motors are controlled by the Arduino motor shield that gets the power directly from the battery. 
 <img src="_img/power.jpg?raw=true" alt="Power circuits" width="640" height="480"/>
