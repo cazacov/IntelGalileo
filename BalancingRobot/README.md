@@ -108,7 +108,7 @@ void writeTo(int device, byte address, byte val) {
 
 ### Keyboard input in the modern C###
 
-The core of the program is infinite loop that reads current angle value and acceleration from the IMU module and adjusts motors power and direction to keep the robot balanced. Such non-ending programs are fine for Arduino but not very suitable for the Windows environment. Sometime you want to cancel the execution and do something else on the microcomputer, for example shutdown it gracefully before switching the power off. So the code must also constantly check the keyboard input and interrupt the execution if the Esc button is pressed. Many years ago when I wrote my last console program in C in the University, I used the getch() function for the non-blocking check of the keyboard. Now in the 21st century the appropriate method to do the same is Console.ReadKey in C#, but the .NET Framework is not ported to Galileo yet, so I had to find the way to query the keyboard status in the modern C. Here is the result:
+The core of the program is infinite loop that reads current angle value and acceleration from the IMU module and adjusts motors power and direction to keep the robot balanced. Such non-ending programs are fine for Arduino but not very suitable for the Windows environment. Sometime you want to cancel the execution and do something else on the microcomputer, for example shutdown it gracefully before switching the power off. So the code must also constantly check the keyboard input and interrupt the execution if the Esc button is pressed. Many years ago when I wrote my last console program in C in the University, I used the getch() function for the non-blocking check of the keyboard. Now in the 21st century the appropriate method to do the same is Console.ReadKey in C#, but the .NET Framework is not ported to Galileo yet. I had to find the way to query the keyboard status in the modern C; here is the result:
   
 ``` cpp
 
@@ -154,10 +154,6 @@ if (eventCount > 0)
 }
 ```
 
-###Fully assembled robot###
-[<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>]
-
-
 ###Connectivity###
 
 The killer feature of the Galileo borad is the PCI-Express slot on the rear side. You can stick there a standard wireless module that is used in notebooks and get fast WiFi and Bluetooth for less than 10 dollars. 
@@ -167,3 +163,6 @@ The killer feature of the Galileo borad is the PCI-Express slot on the rear side
 Unfortunately I did not find the way to use this PCI-E WLAN card under Windows (it works perfect under Yocto Linux from Intel's image), so I had to debug the code over the LAN cable. To minimize possible mechanical disturbances  I used the flat flexible LAN cable that is only 1x6 mm thick.  
 
 [<img src="_img/cable.jpg?raw=true" alt="Flexible LAN cable" width="640" height="480"/>]
+
+###Fully assembled robot###
+[<img src="_img/robot2.jpg?raw=true" alt="Balancing robot" width="640" height="480"/>]
