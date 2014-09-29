@@ -26,7 +26,7 @@ Motors are controlled by the Arduino motor shield that gets the power directly f
 ##Accelerometer and gyroscopes##
 It could be counterintuitive, but the robot is easier to balance if the heavy battery is placed on the very top of it. The robot then acts like an [inverted pendulum](http://en.wikipedia.org/wiki/Inverted_pendulum) that's relatively easy to control. 
 
-Most of models I saw before place the acceleometer to the bottom of the robot, near the rotation axis. In my case the interference from the horizontal movements caused by the motors was too high and the values read from the accelerator were of very poor quality. I decided to put the accelerometer to the robot's center of gravity, that's at about 60% of the total height.  
+Most of models I saw before place the accelerometer to the bottom of the robot, near the rotation axis. In my case the interference from the horizontal movements caused by the motors was too high and the values read from the accelerator were of very poor quality. I decided to put the accelerometer to the robot's center of gravity, that's at about 60% of the total height.  
 
 [<img src="_img/accelerometer.jpg?raw=true" alt="Power circuits" width="480" height="640"/>]
 
@@ -105,3 +105,65 @@ void writeTo(int device, byte address, byte val) {
 }
 
 ```
+
+### Keyboard input in the modern C###
+
+The core of the program is infinite loop that reads current angle value and acceleration from the IMU module and adjusts motors power and direction to keep the robot balanced. Such non-ending programs are fine for Arduino but not very suitable for the Windows environment. Sometime you want to cancel the execution and do something else on the microcomputer, for example shutdown it gracefully before switching the power off. So the code must also constantly check the keyboard input and interrupt the execution if the Esc button is pressed. Many years ago when I wrote my last console program in C in the University, I used the getch() function for the non-blocking check of the keyboard. Now in the 21st century the appropriate method to do the same is Console.ReadKey in C#, but the .NET Framework is not ported to Galileo yet, so I had to find the way to query the keyboard status in the modern C. Here is the result:
+  
+``` cpp
+
+#include <Windows.h>
+HANDLE handle;
+
+// setup
+handle = GetStdHandle(STD_INPUT_HANDLE);
+
+
+// in the loop
+KEY_EVENT_RECORD *currentEvent = NULL;
+DWORD             eventCount;
+INPUT_RECORD      inputRecord;
+
+PeekConsoleInput(handle, &inputRecord, 1, &eventCount);
+
+// See if there was an event
+if (eventCount > 0)
+{
+	// Read it.
+	ReadConsoleInput(handle, &inputRecord, 1, &eventCount);
+	currentEvent = &(inputRecord.Event.KeyEvent);
+	// Filter for key events and only react if the key being down.
+	if (inputRecord.EventType == KEY_EVENT && currentEvent->bKeyDown)
+	{
+		switch (currentEvent->wVirtualKeyCode)
+		{
+			case 27:	// Esc - Stop the program
+				// ... some code here
+				break;
+			case 87:	// W - Move the robot forward
+				// ... some code here
+				break;
+			case 83:	// S - back
+				// ... some code here
+				break;
+			case 88:	// X - Stop the robot 
+				// ... some code here
+				break;
+		}thick
+	}
+}
+```
+
+###Fully assembled robot###
+[<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>]
+
+
+###Connectivity###
+
+The killer feature of the Galileo borad is the PCI-Express slot on the rear side. You can stick there a standard wireless module that is used in notebooks and get fast WiFi and Bluetooth for less than 10 dollars. 
+
+[<img src="_img/wireless.jpg?raw=true" alt="Wireless module on Intel's N135 chip" width="640" height="480"/>]
+
+Unfortunately I did not find the way to use this PCI-E WLAN card under Windows (it works perfect under Yocto Linux from Intel's image), so I had to debug the code over the LAN cable. To minimize possible mechanical disturbances  I used the flat flexible LAN cable that is only 1x6 mm thick.  
+
+[<img src="_img/cable.jpg?raw=true" alt="Flexible LAN cable" width="640" height="480"/>]
