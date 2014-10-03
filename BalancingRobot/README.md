@@ -42,15 +42,12 @@ Intel Galileo board running Windows is the "brain" of the robot. [Here](http://w
 
 The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connected to analog pins A4 and A5 of the board:
 
-| Galileo Pin | IMU board |
+| Galileo Pin | IMU board | 
 |-------------|:---------:|
 | A4          | SDA       |
 | A5          | SCL       |
 | GND         | GND       |
 | 3.3V        | VCC       |
-
-<img src="_img/i2c_connection.jpg?raw=true" alt="Connecting I2C device to Galileo (Windows IoT)" width="640" height="480"/>
-
 <img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>
 
 ### Using I2C on Galileo ###
