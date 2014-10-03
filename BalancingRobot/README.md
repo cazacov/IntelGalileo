@@ -47,8 +47,10 @@ The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connecte
 | A4          | SDA       |
 | A5          | SCL       |
 | GND         | GND       |
-| 3.3V        | VCC       |
+| 5V          | VCC       |
 <img src="_img/i2c_connection.jpg?raw=true" alt="Connecting I2C device to Galileo (Windows IoT)" width="640" height="480"/>
+
+The IMU board has 3.3V chips and internal power converter, so connecting it to 5V is Ok. I did it beciause the 5V pin is next to GND pin; that made wiring simplier.  
 
 <img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>
 
