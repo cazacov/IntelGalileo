@@ -30,7 +30,7 @@ Most of the models I saw before place the accelerometer to the bottom of the rob
 
 <img src="_img/accelerometer.jpg?raw=true" alt="Power circuits" width="480" height="640"/>
 
-##Microcomputer##
+##Controlling motors##
 Intel Galileo board running Windows is the "brain" of the robot. [Here](http://windowsondevices.com) you can sign up for the Windows Developer Program for IoT. The motor shield uses four digital pins on the board:
 
 | Pin |         Action        |
@@ -40,22 +40,58 @@ Intel Galileo board running Windows is the "brain" of the robot. [Here](http://w
 | 6   | Motor 2 - Speed (PWM) |
 | 7   | Motor 2 - Direction   |
 
+Lego motors require at least 300 mA current, so the external power supply is needed. The shield has a special connector for that. Check that jumpers are in PWRIN position.
+
+<img src="_img/motor_shield.jpg?raw=true" alt="Motor Shield with external power" width="640" height="480"/>
+
+
+Code example:
+``` cpp
+// Shield: DFRduino L289P V 1.1 
+
+int pin_motor_a_dir = 4;
+int pin_motor_b_dir = 7;
+
+int pin_motor_a_speed = 5;
+int pin_motor_b_speed = 6;
+
+void setup()
+{
+	pinMode(pin_motor_a_dir, OUTPUT);
+	pinMode(pin_motor_b_dir, OUTPUT);
+	pinMode(pin_motor_a_speed, OUTPUT);
+	pinMode(pin_motor_b_speed, OUTPUT);
+}
+
+void loop()
+{
+	// Motor A
+	digitalWrite(pin_motor_a_dir, HIGH);	// forward
+	analogWrite(pin_motor_a_speed, 255);	// 100% power
+
+	// Motor B
+	digitalWrite(pin_motor_b_dir, LOW);		// backward
+	analogWrite(pin_motor_b_speed, 128);	// 50% power
+}
+```
+
+
+### Using I2C on Galileo ###
+Code example:
+
 The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connected to analog pins A4 and A5 of the board:
 
 | Galileo Pin | IMU board |
 |-------------|:---------:|
-| A4          | SDA       |
-| A5          | SCL       |
+| A4 or SDA   | SDA       |
+| A5 ir SCL   | SCL       |
 | GND         | GND       |
 | 5V          | VCC       |
 <img src="_img/i2c_connection.jpg?raw=true" alt="Connecting I2C device to Galileo (Windows IoT)" width="640" height="480"/>
 
-The IMU board has 3.3V chips and internal power converter, so connecting it to 5V is Ok. I did it beciause the 5V pin is next to GND pin; that made wiring simplier.  
+The IMU board has 3.3V chips and internal power converter, so connecting it to 5V is Ok. I did it beciause the 5V pin is next to GND pin; that made wiring simplier.
 
-<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>
-
-### Using I2C on Galileo ###
-Code example:
+With the new Windows image [released on 2014-09-29](https://ms-iot.github.io/content/SetupGalileo.htm) the SDA/SCL pins near the AREF also can be used for the I2C communication. I tested it with the J2 jumper in 2-3 position (first pin marked with an arrow is free).
 
 ``` cpp
 #include <Wire.h>
@@ -108,7 +144,11 @@ void writeTo(int device, byte address, byte val) {
 }
 
 ```
-The resulting performance is about 120 reads per second, 12 bytes each.
+The resulting performance is about 200 reads per second, 12 bytes each.
+
+Having the distance between mounting holes 65 and 97 mm the board pretty good fits in lego holes that have 8-mm raster.
+
+<img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>
 
 
 ### Keyboard input in the modern C###
