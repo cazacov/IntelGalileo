@@ -38,12 +38,12 @@ void setup()
 	*/
 
 	// Angle regulator. This PID adjusts the desired angle (normally 0) depending 
-	// on the mean spead of the robot. The goal is to keep the mean speed near 0. 
-	// (robot is staying on one place and does not not drive away)
+	// on the mean speed of the robot. The goal is to keep the mean speed near 0. 
+	// (robot is staying on one place and does not drive away)
 	angleRegulator.init(-0.02, 0, 0); // P is negative, because to compensate positive speed we mast tilt the robot little bit back 
 
 	// Speed regulator. This PID gets the desired angle from the angle regulator and 
-	// adjusts the acceleartion (power applied to motors) to keep the angle near the desired value.
+	// adjusts the acceleration (power applied to motors) to keep the angle near the desired value.
 	speedRegulator.init(35, 0.2, 0);
 
 	wprintf(L"Press Esc to exit\n");
