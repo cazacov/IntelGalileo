@@ -89,9 +89,9 @@ The accelerometer/gyroscope unit IMU 3000 has I2C interface and must be connecte
 | 5V          | VCC       |
 <img src="_img/i2c_connection.jpg?raw=true" alt="Connecting I2C device to Galileo (Windows IoT)" width="640" height="480"/>
 
-The IMU board has 3.3V chips and internal power converter, so connecting it to 5V is Ok. I did it beciause the 5V pin is next to GND pin; that made wiring simplier.
+The IMU board has 3.3V chips and internal power converter, so connecting it to 5V is Ok. I did it beciause the 5V pin is next to the GND pin; that made wiring simplier.
 
-With the new Windows image [released on 2014-09-29](https://ms-iot.github.io/content/SetupGalileo.htm) the SDA/SCL pins near the AREF also can be used for the I2C communication. I tested it with the J2 jumper in 2-3 position (first pin marked with an arrow is free).
+With the new Windows image [released on 2014-09-29](https://ms-iot.github.io/content/SetupGalileo.htm) the SDA/SCL pins near the AREF can also be used for the I2C communication. I tested it with the Galileo J2 jumper in 2-3 position (first pin marked with an arrow is free).
 
 ``` cpp
 #include <Wire.h>
@@ -146,7 +146,7 @@ void writeTo(int device, byte address, byte val) {
 ```
 The resulting performance is about 200 reads per second, 12 bytes each.
 
-Having the distance between mounting holes 65 and 97 mm the board pretty good fits in lego holes that have 8-mm raster.
+Having the distance between mounting holes 65 and 97 mm the board fits pretty well in Lego holes that have 8-mm raster.
 
 <img src="_img/galileo.jpg?raw=true" alt="Galileo board" width="640" height="480"/>
 
