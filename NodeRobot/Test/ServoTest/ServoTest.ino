@@ -36,7 +36,7 @@ void loop()
       servoX.write(x);  
       delay(del);
     }
-    
+    /*
     for (y = 90; y > 60; y--)
     {
       servoY.write(y);  
@@ -52,5 +52,6 @@ void loop()
       servoY.write(y);  
       delay(del);
     }
+    */
     delay(3000);
 } 
