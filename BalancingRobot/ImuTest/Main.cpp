@@ -60,6 +60,7 @@ void setup()
 	//cancel pass through to accel, gyro will now read accel for us   
 	writeTo(GYRO, 0x3D, 0x28);
 	wprintf_s(L"Done\n");
+	delay(100);
 }
 
 int n = 0;
@@ -67,7 +68,6 @@ int n = 0;
 void loop()
 {
 	// Read the Gyro X, Y and Z and Accel X, Y and Z all through the gyro
-
 	// First set the register start address for X on Gyro  
 	Wire.beginTransmission(GYRO);
 	Wire.write(REG_GYRO_X); //Register Address GYRO_XOUT_H
@@ -94,27 +94,8 @@ void loop()
 	accel_y = (int16_t)(buffer[7]) << 8 | buffer[6];
 	accel_x = (int16_t)(buffer[9]) << 8 | buffer[8];
 	accel_z = (int16_t)(buffer[11]) << 8 | buffer[10];
-
-	/*
-	wprintf_s(L"%02X%02X\t%02X%02X\t%02X%02X\t\t%d\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], gyro_y);
-
-	gyro_x = buffer[0] << 8 | buffer[1];
-	gyro_y = buffer[2] << 8 | buffer[3];
-	gyro_z = buffer[4] << 8 | buffer[5];
-	*/
 	
-
-	
-	// Accel is LSB first. Also because of orientation of chips
-	// accel y output is in same orientation as gyro x
-	// and accel x is gyro -y
-	/*
-	accel_y = buffer[7] << 8 | buffer[6];
-	accel_x = buffer[9] << 8 | buffer[8];
-	accel_z = buffer[11] << 8 | buffer[10];
-	*/
-
-	if (n % 20 == 0)
+	if (n % 100 == 0)
 	{
 		wprintf_s(L"%d\tgX:%d\tgY:%d\tgZ:%d\t\taX:%d\taY:%d\taZ:%d\n", n, gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z);
 	}

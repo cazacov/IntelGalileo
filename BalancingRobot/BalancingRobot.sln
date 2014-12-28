@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImuTest", "ImuTest\ImuTest.vcxproj", "{B8FFEA9F-3ABC-4209-8FDF-D4EECF4120D0}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BalancingRobot", "BalancingRobot\BalancingRobot.vcxproj", "{5389315A-CBE1-4B90-B88A-5098E5E8AF35}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KeyTest", "KeyTest\KeyTest.vcxproj", "{3AFC5AD9-7016-493C-AAEF-105600905032}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MouseTest", "MouseTest\MouseTest.vcxproj", "{F3503302-C0F8-4285-8D24-F335153B0A6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{3AFC5AD9-7016-493C-AAEF-105600905032}.Debug|Win32.Build.0 = Debug|Win32
 		{3AFC5AD9-7016-493C-AAEF-105600905032}.Release|Win32.ActiveCfg = Release|Win32
 		{3AFC5AD9-7016-493C-AAEF-105600905032}.Release|Win32.Build.0 = Release|Win32
+		{F3503302-C0F8-4285-8D24-F335153B0A6C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F3503302-C0F8-4285-8D24-F335153B0A6C}.Debug|Win32.Build.0 = Debug|Win32
+		{F3503302-C0F8-4285-8D24-F335153B0A6C}.Release|Win32.ActiveCfg = Release|Win32
+		{F3503302-C0F8-4285-8D24-F335153B0A6C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
