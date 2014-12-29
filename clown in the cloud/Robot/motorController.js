@@ -5,24 +5,6 @@
 */    
     
 
-/*
-Pulse Width Modulation, or PWM, is a technique for getting analog results with digital means.
-
-A simple node.js application intended to read and write analog values to fade a LED from Digital pins on the Intel based development boards such as the Intel(R) Galileo and Edison with Arduino breakout board.
-
-MRAA - Low Level Skeleton Library for Communication on GNU/Linux platforms
-Library in C/C++ to interface with Galileo & other Intel platforms, in a structured and sane API with port nanmes/numbering that match boards & with bindings to javascript & python.
-
-Steps for installing MRAA & UPM Library on Intel IoT Platform with IoTDevKit Linux* image
-Using a ssh client: 
-1. echo "src maa-upm http://iotdk.intel.com/repos/1.1/intelgalactic" > /etc/opkg/intel-iotdk.conf
-2. opkg update
-3. opkg upgrade
-
-Article: https://software.intel.com/en-us/html5/articles/intel-xdk-iot-edition-nodejs-templates
-*/
-
-
 module.exports = function() {
     
     var mraa = require("mraa"); //require mraa
@@ -97,6 +79,14 @@ module.exports = function() {
         {
             stop();
         }
+        else if (actionName == 'left')
+        {
+            left();
+        }
+        else if (actionName == 'right')
+        {
+            right();
+        }
     }
     
     function demo() {
@@ -120,6 +110,7 @@ module.exports = function() {
       stop: stop,
       left: left,
       right: right,
-      demo: demo
+      demo: demo,
+      doAction: doAction
   };
 }();
