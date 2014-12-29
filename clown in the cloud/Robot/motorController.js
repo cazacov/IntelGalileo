@@ -87,6 +87,18 @@ module.exports = function() {
 
     };
     
+    function doAction(actionName)
+    {
+        if (actionName == 'go')
+        {
+            go();
+        }
+        else if (actionName == 'stop')
+        {
+            stop();
+        }
+    }
+    
     function demo() {
         console.log("Motor demo");
         var idx = 0;
