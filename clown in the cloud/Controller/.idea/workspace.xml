@@ -36,8 +36,8 @@
       <file leaf-file-name="npm-debug.log" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/npm-debug.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7713249" vertical-offset="18580" max-vertical-offset="19131">
-              <caret line="905" column="0" selection-start-line="905" selection-start-column="0" selection-end-line="905" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.7713249" vertical-offset="18328" max-vertical-offset="19131">
+              <caret line="893" column="39" selection-start-line="893" selection-start-column="39" selection-end-line="893" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -176,6 +176,7 @@
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app.js" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -333,8 +334,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/npm-debug.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7713249" vertical-offset="18580" max-vertical-offset="19131">
-          <caret line="905" column="0" selection-start-line="905" selection-start-column="0" selection-end-line="905" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7713249" vertical-offset="18328" max-vertical-offset="19131">
+          <caret line="893" column="39" selection-start-line="893" selection-start-column="39" selection-end-line="893" selection-end-column="39" />
           <folding />
         </state>
       </provider>

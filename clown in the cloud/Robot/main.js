@@ -2,14 +2,18 @@
 /*jshint unused:true */
 /*global */
 
-var theThingsAPI = require('thethingsio-api');
+var ledController = require("./ledController.js");
+ledController.smile();
+
 var motorController = require("./motorController.js")
 motorController.stop();
-
-var ledController = require("./ledController.js")
-
 //motorController.demo();
 
+var headControler = require("./headcontroller.js");
+headControler.lookMiddle();
+
+
+var theThingsAPI = require('thethingsio-api');
 var motionKEY = 'motion';
 
 //create Client
@@ -27,7 +31,6 @@ function readMotions()
         {
             var payload = JSON.parse(res.payload);
             var newAction = payload.data[0].value;
-            console.log(newAction);
             if (newAction !== lastAction)
             {
                 lastAction = newAction;
@@ -38,14 +41,11 @@ function readMotions()
     req1.end();
 }
 
-ledController.clear();
-ledController.smile();
 
 readMotions();
 motorController.stop();
 
 var loopCounter = 0;
 setInterval(function() {
-    console.log(loopCounter++);
     readMotions();
 }, 200);
