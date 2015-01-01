@@ -1,5 +1,5 @@
 {
-  "name": "ClownInTheCloud",
+  "name": "DigitalWrite",
   "description": "",
   "version": "0.0.0",
   "main": "main.js",
@@ -7,6 +7,5 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-      "thethingsio-api":"*"
   }
 }

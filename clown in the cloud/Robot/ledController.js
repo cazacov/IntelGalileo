@@ -7,8 +7,8 @@ module.exports = function() {
         console.log("Initializing LED matrix controller");
         i2C.address(0x70);
         writeBuffer(new Buffer([0x21]));    // turn on oscillator
+        writeBuffer(new Buffer([0xEF]));    // Brightness 15                
         writeBuffer(new Buffer([0x81]));    // Turn off blinking
-        writeBuffer(new Buffer([0xEF]));    // Brightness 15        
     }
     
     function clear() {
@@ -27,8 +27,8 @@ module.exports = function() {
             b2[i*2] = arr[i];
             b2[i*2+1] = 0;
         }
+        i2C.write(str);
         */
-        //i2C.write(str);
         //var strBuf = buffer.toString('ascii');
         //strBuf = b2.toString('utf16le');
         

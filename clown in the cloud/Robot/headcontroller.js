@@ -3,9 +3,7 @@ module.exports = function() {
     var servoModule = require('jsupm_servo');
 
     var xServo = new servoModule.Servo(10);
-    var yServo = new servoModule.Servo(10);
-    
-    
+    var yServo = new servoModule.Servo(11);
     
     function lookUp() {
         console.log("Head: up");

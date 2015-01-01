@@ -3,15 +3,17 @@
 /*global */
 
 var ledController = require("./ledController.js");
+ledController.clear();
 ledController.smile();
 
+
 var motorController = require("./motorController.js")
+motorController.go();
 motorController.stop();
 //motorController.demo();
 
 var headControler = require("./headcontroller.js");
 headControler.lookMiddle();
-
 
 var theThingsAPI = require('thethingsio-api');
 var motionKEY = 'motion';
@@ -40,7 +42,6 @@ function readMotions()
     });
     req1.end();
 }
-
 
 readMotions();
 motorController.stop();

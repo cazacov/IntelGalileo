@@ -41,9 +41,9 @@ module.exports = function() {
     function stop() {
         console.log("Action: STOP");
         aSpeed.enable(false);
-        aSpeed.write(0);    // 0% on
+        aSpeed.write(0);    // 0% 
         bSpeed.enable(false);
-        bSpeed.write(0);    // 0% on
+        bSpeed.write(0);    // 0% 
     };
   
     function left() {
