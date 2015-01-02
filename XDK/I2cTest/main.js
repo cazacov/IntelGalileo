@@ -1,12 +1,19 @@
 var mraa = require("mraa"); //require mraa
 var i2C = new mraa.I2c(0);
+
+i2C.address(0x70);
+i2C.write(String.fromCharCode(0x21)); // Writes one byte: 0x21
+i2C.write(0xEF); 
+
+console.log("Done");
+
     
 function init() {
     console.log("Initializing LED matrix controller");
     i2C.address(0x70);
     writeBuffer(new Buffer([0x21]));    // turn on oscillator
     
-    var st = String.fromCharCode(0xF001);
+    var st = String.fromCharCode(0xF001); // Translated in UTF-8 as  EF,80,81
     i2C.write(st);
 
     //writeBuffer(new Buffer([0xEF]));    // Brightness 15                
@@ -46,7 +53,7 @@ function smile() {
     writeBuffer(smiley);
 }
     
-init();
+//init();
 
-clear();
-smile();    
+//clear();
+//smile();    
