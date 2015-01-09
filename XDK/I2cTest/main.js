@@ -1,59 +1,65 @@
+/*
+Simple library for controlling Adafruit LED 1.2" 8x8 Matrix
+https://learn.adafruit.com/adafruit-led-backpack/1-2-8x8-matrix
+
+Wiring: 
+GND -> Galileo GND
+VCC -> Galileo 5V
+SDA -> Galileo analog pin 4
+SCL -> Galileo analog pin 5
+*/
+
 var mraa = require("mraa"); //require mraa
 var i2C = new mraa.I2c(0);
 
-i2C.address(0x70);
-i2C.write(String.fromCharCode(0x21)); // Writes one byte: 0x21
-i2C.write(0xEF); 
+// helper function to go from hex val to dec
+function char(x) { return parseInt(x, 16); }
 
-console.log("Done");
-
-    
+// Must be called once before using other functions
 function init() {
     console.log("Initializing LED matrix controller");
     i2C.address(0x70);
-    writeBuffer(new Buffer([0x21]));    // turn on oscillator
-    
-    var st = String.fromCharCode(0xF001); // Translated in UTF-8 as  EF,80,81
-    i2C.write(st);
+    i2C.writeByte(char('0x21'));    // Turn on oscillator
+    i2C.writeByte(char('0xef'));    // Brightness 15
+    i2C.writeByte(char('0x81'));    // No blinking
+}
 
-    //writeBuffer(new Buffer([0xEF]));    // Brightness 15                
-    //writeBuffer(new Buffer([0xF001]));    // Turn off blinking
-}
-    
-function clear() {
-    console.log("LED: clear");
-    writeBuffer(new Buffer([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]));
-}
-    
+/* Writes the Buffer of 8 bytes in the display's memory
+    Attention: matrix columns are mapped to the bits as following:
+    7 0 1 2 3 4 5 6
+*/
 function writeBuffer(buffer)
 {
-        /*
-        var arr = new Uint32Array(buffer);
-        var b2 = new Buffer(arr.length * 2);
-        
-        var str = ""; 
-        for(var i = 0; i < arr.length; i++) {
-            b2[i*2] = arr[i];
-            b2[i*2+1] = 0;
-        }
-        i2C.write(str);
-        */
-        //var strBuf = buffer.toString('ascii');
-        //strBuf = b2.toString('utf16le');
-    console.log("Writing bufer of " + buffer.length + " bytes");
-    var str = buffer.toString('ascii');
-    i2C.write(str);
+    // Add write command (zero byte) at the head of buffer
+    var rawBuffer = new Buffer(buffer.length * 2 + 1);
+    
+    rawBuffer[0] = 0x00; // Write command
+    
+    for (var i = 0; i < buffer.length; i++)
+    {
+        rawBuffer[i*2 + 1] = buffer[i];
+        rawBuffer[i*2 + 2] = 0;
+    }
+    i2C.write(rawBuffer);
+}
+
+// Clears the matrix
+function clear() {
+    console.log("LED: clear");
+    var allZeroes = 
+    writeBuffer(new Buffer([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]));
+    
 }
     
-    
-    
+// Shows a smiling face
 function smile() {
     console.log("LED: smile");
-    var smiley = new Buffer([0x00, 0x03, 0x00, 0x13, 0x00, 0x20, 0x00, 0x2C, 0x00, 0x20, 0x00, 0x13, 0x00, 0x03, 0x00, 0x00, 0x00]);
+    var smiley = new Buffer([0x1E, 0x21, 0xCA, 0xD0, 0xD0, 0xCA, 0x21, 0x1E]);
     writeBuffer(smiley);
 }
     
-//init();
 
-//clear();
-//smile();    
+init();
+
+clear();
+smile();    
